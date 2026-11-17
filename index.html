@@ -17,8 +17,7 @@
   <div id="result"></div>
 
   <script>
-    // Paste the Apps Script web app URL (ends in /exec) here
-    const API_URL = 'PASTE_YOUR_EXEC_URL_HERE';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbwC418OU8M0DlPuALSJTfmEigXcauXHfc7lkcV_KlpcwEE8n3q6hQ7sVlsG8I3hDqce/exec';
 
     document.getElementById('testBtn').addEventListener('click', async () => {
       const result = document.getElementById('result');
@@ -26,7 +25,7 @@
       try {
         const res = await fetch(API_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // text/plain avoids the CORS error
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({
             name: 'Website Test', contact: '09xxxxxxxxx',
             items: [{ name: 'Ensaymada', qty: 1 }],
