@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In — Orijin Pastries</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#084BAC',
+        'on-primary': '#FFFFFF',
+        'secondary': '#FFF2A3',
+        'on-secondary': '#084BAC',
+        'surface': '#FFFDF6',
+        'on-surface': '#084BAC',
+        'surface-variant': '#FFF8D6',
+        'on-surface-variant': '#084BAC',
+        'outline': '#084BAC',
+        'outline-light': '#7EA4E3',
+        'light-primary': '#084BAC',
+        'light-on-primary': '#FFFFFF',
+        'light-secondary': '#FFF2A3',
+        'light-on-secondary': '#084BAC',
+        'light-surface': '#FFFDF6',
+        'light-on-surface': '#084BAC',
+        'light-surface-variant': '#FFF8D6',
+        'light-on-surface-variant': '#084BAC',
+        'light-outline': '#084BAC',
+        'dark-primary': '#7EA4E3',
+        'dark-on-primary': '#031F4D',
+        'dark-secondary': '#FFF2A3',
+        'dark-on-secondary': '#084BAC',
+        'dark-surface': '#0A192F',
+        'dark-on-surface': '#E8F0FE',
+        'dark-surface-variant': '#132D56',
+        'dark-on-surface-variant': '#E8F0FE',
+        'dark-outline': '#7EA4E3',
+      },
+      borderRadius: {
+        'sm': '8px',
+        'DEFAULT': '12px',
+        'md': '16px',
+        'lg': '24px',
+        'xl': '32px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '16px',
+      },
+      fontFamily: {
+        'display': ['"Boogaloo"', 'sans-serif'],
+        'headline': ['"Boogaloo"', 'sans-serif'],
+        'title': ['"Capriola"', 'sans-serif'],
+        'body': ['"Capriola"', 'sans-serif'],
+        'label': ['"Capriola"', 'sans-serif'],
+      },
+      fontSize: {
+        'display-lg': ['40px', { lineHeight: '46px', letterSpacing: '0px', fontWeight: '400' }],
+        'display-lg-mobile': ['30px', { lineHeight: '36px', letterSpacing: '0px', fontWeight: '400' }],
+        'headline-xl': ['36px', { lineHeight: '42px', letterSpacing: '0px', fontWeight: '400' }],
+        'headline-xl-mobile': ['28px', { lineHeight: '34px', letterSpacing: '0px', fontWeight: '400' }],
+        'headline-lg': ['28px', { lineHeight: '34px', letterSpacing: '0px', fontWeight: '400' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '400' }],
+        'headline-sm': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '400' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['12px', { lineHeight: '16px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-xs': ['11px', { lineHeight: '15px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.25px', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.25px', fontWeight: '600' }],
+        'label-sm': ['10px', { lineHeight: '14px', letterSpacing: '0.25px', fontWeight: '600' }],
+      },
+      transitionDuration: {
+        'state-change': '120ms',
+        'surface-enter': '200ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0, 0, 0.2, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&amp;family=Capriola&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }
+    .halftone-bg {
+      background-image: radial-gradient(#084BAC 1.2px, transparent 1.2px);
+      background-size: 8px 8px;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-[884px]" data-stitch-vh="min-h-[884px]===min-h-screen">
+  <div class="w-full max-w-[420px] mx-auto min-h-[884px] bg-surface flex flex-col justify-between relative shadow-xl overflow-hidden" data-stitch-vh="min-h-[884px]===min-h-screen">
+    
+    <!-- Top Halftone & Bakery Banner Header -->
+    <header class="bg-secondary/70 pt-8 pb-7 px-5 text-center relative border-b border-primary/10">
+      <div class="absolute right-0 top-0 w-36 h-36 halftone-bg opacity-35 rounded-bl-full pointer-events-none"></div>
+      <div class="inline-flex items-center justify-center gap-2 mb-1">
+        <span class="w-8 h-0.5 bg-primary"></span>
+        <span class="font-headline text-display-lg-mobile tracking-wider text-primary">ORIJIN</span>
+        <span class="w-8 h-0.5 bg-primary"></span>
+      </div>
+      <p class="font-headline text-headline-sm tracking-widest text-primary">
+        — PASTRIES SHOP —
+      </p>
+    </header>
+
+    <!-- Main Auth Card Container -->
+    <main class="flex-1 px-4 py-8 flex flex-col justify-center">
+      <div class="border-2 border-primary rounded-3xl p-6 bg-surface shadow-sm flex flex-col gap-4">
+        
+        <div class="text-center mb-1">
+          <h1 class="font-headline text-headline-xl-mobile text-primary leading-tight">
+            Welcome Back!
+          </h1>
+          <p class="font-headline text-headline-sm text-primary/80 mt-1">
+            Log in to continue enjoying your treats!
+          </p>
+        </div>
+
+        <form action="index.html" method="get" class="flex flex-col gap-3.5">
+          <!-- Email Input with User Icon -->
+          <div class="relative flex items-center">
+            <span class="absolute left-4 text-primary" aria-hidden="true">
+              <span class="material-symbols-outlined text-headline-sm">account_circle</span>
+            </span>
+            <input type="email" placeholder="Email Address" required class="w-full pl-12 pr-4 py-3 rounded-full border-2 border-primary bg-white text-primary placeholder-primary/50 text-body-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+          </div>
+
+          <!-- Password Input with Lock & Eye Icon -->
+          <div class="relative flex items-center">
+            <span class="absolute left-4 text-primary" aria-hidden="true">
+              <span class="material-symbols-outlined text-headline-sm">lock</span>
+            </span>
+            <input type="password" placeholder="Password" required class="w-full pl-12 pr-12 py-3 rounded-full border-2 border-primary bg-white text-primary placeholder-primary/50 text-body-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <button type="button" class="absolute right-4 text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded" aria-label="Toggle password visibility">
+              <span class="material-symbols-outlined text-headline-sm">visibility_off</span>
+            </button>
+          </div>
+
+          <!-- Remember Me & Forgot Password Row -->
+          <div class="flex items-center justify-between text-body-xs text-primary pt-1">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded border-2 border-primary text-primary focus:ring-0 cursor-pointer">
+              <span class="font-title font-semibold">Remember Me</span>
+            </label>
+            <a href="#" class="font-title font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-primary rounded">
+              Forgot Password?
+            </a>
+          </div>
+
+          <!-- Log In Button -->
+          <button type="submit" class="w-full bg-primary text-on-primary py-3 rounded-full font-headline text-headline-sm mt-2 active:scale-95 transition-transform shadow-sm focus-visible:ring-2 focus-visible:ring-primary">
+            Log In
+          </button>
+
+          <!-- Divider -->
+          <div class="flex items-center justify-center gap-3 my-1">
+            <span class="w-16 h-0.5 bg-primary/40"></span>
+            <span class="font-headline text-body-xs text-primary">Or</span>
+            <span class="w-16 h-0.5 bg-primary/40"></span>
+          </div>
+
+          <!-- Continue As Guest Button -->
+          <a href="index.html" class="w-full border-2 border-primary text-primary py-3 rounded-full font-headline text-headline-sm text-center bg-surface active:scale-95 transition-transform focus-visible:ring-2 focus-visible:ring-primary">
+            Continue As Guest
+          </a>
+
+          <!-- Don't have an account? Sign Up Row -->
+          <div class="flex items-center justify-between text-body-xs text-primary pt-2 px-1">
+            <span class="font-title font-semibold">Dont have an account?</span>
+            <a href="#" class="font-headline text-title-md underline focus-visible:ring-2 focus-visible:ring-primary rounded">Sign Up</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <!-- Bottom Decorative Halftone & Cookie Graphic Footer -->
+    <footer class="bg-primary text-on-primary h-28 px-4 relative flex items-center justify-between overflow-hidden">
+      <div class="absolute left-0 bottom-0 w-28 h-28 halftone-bg opacity-30 pointer-events-none"></div>
+      
+      <div class="absolute right-4 bottom-3 flex items-center justify-center">
+        <svg class="w-16 h-16 text-secondary fill-none stroke-current stroke-2" viewBox="0 0 100 100">
+          <line x1="18" y1="38" x2="26" y2="44" stroke-linecap="round"></line>
+          <line x1="50" y1="12" x2="50" y2="22" stroke-linecap="round"></line>
+          <line x1="82" y1="28" x2="74" y2="36" stroke-linecap="round"></line>
+          <path d="M 25,60 C 20,45 35,30 50,30 C 68,30 85,42 80,62 C 75,80 58,82 45,80 C 32,78 28,72 25,60 Z" fill="#FFF2A3"></path>
+          <circle cx="42" cy="46" r="3" fill="#084BAC"></circle>
+          <circle cx="62" cy="48" r="3.5" fill="#084BAC"></circle>
+          <circle cx="52" cy="62" r="3" fill="#084BAC"></circle>
+          <circle cx="70" cy="65" r="2.5" fill="#084BAC"></circle>
+          <circle cx="36" cy="68" r="2" fill="#084BAC"></circle>
+        </svg>
+      </div>
+    </footer>
+  </div>
+
+
+</body></html>
