@@ -1,7 +1,7 @@
 // ORIJIN – front-end helper for the Apps Script backend.
 // Add to every page that needs data:  <script src="api.js"></script>
 
-const ORIJIN_API = 'PASTE_YOUR_EXEC_URL_HERE'; // ends in /exec
+const ORIJIN_API = 'https://script.google.com/macros/s/AKfycby8-_8LUyFz0Gk0GbgQXSTa7oRwwH_-MHq2lPuMhUmF-oAukwVBeeUtE-1flflgBuQs/exec'; // ends in /exec
 
 async function apiGet(params) {
   const res = await fetch(ORIJIN_API + '?' + new URLSearchParams(params));
