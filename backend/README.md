@@ -18,49 +18,34 @@ The backend is a Google Sheet + Google Apps Script. The Sheet is the database **
 > After **any** change to `Code.gs`: Deploy → Manage deployments → ✏️ Edit → Version: **New version** → Deploy.
 > Otherwise the live URL keeps running the old code.
 
-## 2. How Jin runs the shop from the Sheet
+## 2. How Jin updates the menu (no coding needed)
 
-| He wants to… | He does this |
+Everything lives in the **Products** tab. Changes show on the website on the next page load.
+There is also an **ORIJIN** menu at the top of the Sheet (Add a new product, Make product photos viewable, Update the website now, How to edit the menu). Hover over any column title for a hint.
+
+| Jin wants to… | He does this in **Products** |
 | --- | --- |
-| Change a price, stock badge or description | Edit the row in **Products** |
-| Hide an item | Untick **Show on Site** |
-| Mark sold out | Set **Stock** to `Sold out` (customers can't order it) |
-| Move an order along | Change the **Status** dropdown in **Orders** – the time stamps fill in automatically |
-| Change the delivery fee | Edit `DELIVERY_FEE` in **Settings** |
+| Change a price | Edit **Price (PHP)** (numbers only) |
+| Change the description | Edit **Short Description** |
+| Change ingredients | Edit **Ingredients** (comma-separated) |
+| Update nutrition | Edit **Calories**, **Protein (g)**, **Carbs (g)**, **Fat (g)** |
+| Add a product | ORIJIN menu → **Add a new product**, or type a name in the next empty row (the ID fills in by itself) |
+| Add or change a photo | Upload to Google Drive → Share → Copy link → paste in **Photo 1** (2 and 3 optional) → ORIJIN menu → **Make product photos viewable on the website** |
+| Mark sold out | Set **Stock** to `Sold out` (stays visible, can't be ordered) |
+| Hide a product | Tick **Hidden** |
+| Choose the home page items | Tick **Featured on Home** (up to 3) |
+| New category | Type it in **Category**; it appears as a filter button on the menu |
 
-Status flow (matches tracking.html): `For Payment` → `For Baking` → `For Delivery / Ready for Pickup` → `Delivered / Picked Up` (or `Cancelled`).
+Don't change a product's **ID** after it has been ordered. Columns can be moved or resized freely.
 
-**Product photos:** put images in an `images/` folder in the GitHub repo and write the path (e.g. `images/red-velvet.jpg`) in the **Image URL** column.
+Orders: change the **Status** dropdown in **Orders**; the time stamps fill in automatically.
+Flow: `For Payment` → `For Baking` → `For Delivery / Ready for Pickup` → `Delivered / Picked Up` (or `Cancelled`).
 
-## 3. Front-end integration (for the front-end dev)
+## 3. Front end
 
-Add to each page that needs data, before the page's own script:
+`index.html`, `menu.html` and `product.html` are already connected: they load `api.js` + `shop.js`, which build the product cards from the Sheet using the original design. Product links use `product.html?id=P001`; category tiles use `menu.html?category=Cookies`. The cart is saved in the browser (`Cart` in `api.js`) and the header shows `Cart (n)`.
 
-```html
-<script src="api.js"></script>
-```
-
-### menu.html / index.html – load products
-```js
-const { products } = await OrijinAPI.getProducts();
-// each: { id, name, category, price, calories, protein, carbs, fat,
-//         stock: 'In stock'|'Low stock'|'Sold out', available, description, ingredients, images[] }
-// render the cards from this array instead of the hard-coded ones
-// link to product page: product.html?id=P001
-// "Add to cart" button: Cart.add(product.id, 1)
-```
-
-### product.html – one product
-```js
-const id = new URLSearchParams(location.search).get('id');
-const { ok, product } = await OrijinAPI.getProduct(id);
-// quantity stepper -> Cart.add(product.id, qty)
-```
-
-### Cart badge "Cart (0)" in the header
-```js
-document.querySelector('#cartCount').textContent = `Cart (${Cart.count()})`;
-```
+Still to connect: checkout, confirmation and tracking.
 
 ### checkout.html – place the order
 ```js
