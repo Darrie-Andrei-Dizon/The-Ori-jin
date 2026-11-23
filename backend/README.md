@@ -1,6 +1,10 @@
-# ORIJIN Backend – Setup and Integration Guide
+# ORIJIN – Developer Guide
 
-The backend is a Google Sheet + Google Apps Script. The Sheet is the database **and** Jin's admin panel.
+Technical setup and integration notes for the team. Jin's guide to running the shop is the [main README](../README.md).
+
+The backend is a Google Sheet + Google Apps Script web app. The Sheet is the database **and** Jin's admin panel. The website is static HTML on GitHub Pages and calls the web app through `api.js`.
+
+**Live site:** https://darrie-andrei-dizon.github.io/The-Ori-jin/
 
 ## 1. Set up the backend (owner of the Sheet does this once)
 
@@ -13,33 +17,19 @@ The backend is a Google Sheet + Google Apps Script. The Sheet is the database **
 4. Optional test: run **`testPlaceOrder`**, then **`testTrack`** and check the log.
    Delete the test row in Orders afterwards.
 5. **Deploy → New deployment → Web app** – Execute as **Me**, Who has access **Anyone** → copy the URL ending in `/exec`.
-6. Paste that URL into `ORIJIN_API` at the top of `api.js`.
+6. Paste that URL into `ORIJIN_API` at the top of `api.js` (already done for the current deployment).
+7. GitHub Pages: repo **Settings → Pages** → Source **Deploy from a branch**, Branch **main**, folder **/ (root)**.
 
 > After **any** change to `Code.gs`: Deploy → Manage deployments → ✏️ Edit → Version: **New version** → Deploy.
 > Otherwise the live URL keeps running the old code.
 
-## 2. How Jin updates the menu (no coding needed)
+## 2. Sheet layout
 
-Everything lives in the **Products** tab. Changes show on the website on the next page load.
-There is also an **ORIJIN** menu at the top of the Sheet (Add a new product, Make product photos viewable, Update the website now, How to edit the menu). Hover over any column title for a hint.
+- **Products**: one row per item. The code finds columns by header name, so columns can be moved. Running `setup()` again adds any missing columns and keeps existing data.
+- **Orders**: one row per order. `onEdit` stamps **Paid At**, **Ready At** and **Completed At** when **Status** changes. **Items JSON** is hidden and used by tracking.
+- **Settings**: `SHOP_NAME`, `DELIVERY_FEE`, `NOTIFY_EMAIL`, `PAYMENT_INSTRUCTIONS`.
 
-| Jin wants to… | He does this in **Products** |
-| --- | --- |
-| Change a price | Edit **Price (PHP)** (numbers only) |
-| Change the description | Edit **Short Description** |
-| Change ingredients | Edit **Ingredients** (comma-separated) |
-| Update nutrition | Edit **Calories**, **Protein (g)**, **Carbs (g)**, **Fat (g)** |
-| Add a product | ORIJIN menu → **Add a new product**, or type a name in the next empty row (the ID fills in by itself) |
-| Add or change a photo | Upload to Google Drive → Share → Copy link → paste in **Photo 1** (2 and 3 optional) → ORIJIN menu → **Make product photos viewable on the website** |
-| Mark sold out | Set **Stock** to `Sold out` (stays visible, can't be ordered) |
-| Hide a product | Tick **Hidden** |
-| Choose the home page items | Tick **Featured on Home** (up to 3) |
-| New category | Type it in **Category**; it appears as a filter button on the menu |
-
-Don't change a product's **ID** after it has been ordered. Columns can be moved or resized freely.
-
-Orders: change the **Status** dropdown in **Orders**; the time stamps fill in automatically.
-Flow: `For Payment` → `For Baking` → `For Delivery / Ready for Pickup` → `Delivered / Picked Up` (or `Cancelled`).
+Products are cached for 5 minutes; any edit to the Products tab clears the cache, and so does **ORIJIN → Update the website now**. Orders always read fresh prices and stock.
 
 ## 3. Front end
 
@@ -92,3 +82,33 @@ const res = await OrijinAPI.trackOrder(q.get('orderId'), q.get('email'));
 - **Accounts / login.html** – checkout works as guest. Storing passwords safely needs a real auth service (e.g. Firebase Auth); recommend keeping "Continue as guest" for the MVP.
 - **Online payment** – orders start at `For Payment`; customers pay by GCash/Maya using `PAYMENT_INSTRUCTIONS`, and Jin moves the status to `For Baking` once paid.
 - **Email limits** – free Gmail accounts can send about 100 emails/day (customer + Jin = 2 per order).
+
+## Updating the code
+
+| Change | What to do |
+| --- | --- |
+| Website pages (HTML, CSS, JS) | Commit to `main`; GitHub Pages republishes in about a minute. |
+| `backend/Code.gs` | Paste into Apps Script, then **Deploy → Manage deployments → ✏️ → Version: New version → Deploy**. The `/exec` URL stays the same. |
+
+## Project files
+
+```
+index.html         Home page (featured products, categories, order lookup)
+menu.html          Catalog with category filters
+product.html       Product details (product.html?id=P001)
+checkout.html      Checkout            (not yet connected to the backend)
+confirmation.html  Order confirmation  (not yet connected)
+tracking.html      Order tracking      (not yet connected)
+login.html         Login               (design only; checkout works as guest)
+api.js             Backend URL, API calls and cart
+shop.js            Builds the product cards from the Sheet
+images/            Product photos
+backend/Code.gs    Google Apps Script backend
+```
+
+## Troubleshooting
+
+- **"The menu is not connected yet"**: `ORIJIN_API` in `api.js` is still the placeholder.
+- **"Could not load the menu"**: open the `/exec` URL in a browser. If it doesn't return `"ok":true`, redeploy with **Who has access: Anyone**.
+- **Backend changes don't take effect**: deploy a **New version**.
+- **404 on the site**: GitHub Pages is off or still publishing; check **Settings → Pages**.

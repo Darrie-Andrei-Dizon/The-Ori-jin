@@ -1,97 +1,162 @@
-# ORIJIN – Online Pastry Shop
+# ORIJIN – Shop Guide for Jin
 
-An ordering website for Jin's pastry business. Customers browse the menu, add items to their cart, choose delivery or pick-up, and track their order. Jin manages the menu and orders from a Google Sheet, with no coding needed.
+This is your online pastry shop. Customers see your menu on the website. You run everything from one Google Sheet. You don't need to touch any code or this GitHub page.
 
-**Live site:** https://darrie-andrei-dizon.github.io/The-Ori-jin/ (works once GitHub Pages is turned on, step 3 below)
-
-## How it works
-
-| Part | What it is | Where it lives |
-| --- | --- | --- |
-| Website (front end) | HTML pages styled with Tailwind | This repo, published by GitHub Pages |
-| Backend | Google Apps Script web app | `backend/Code.gs`, pasted into the Google Sheet |
-| Database and admin panel | Google Sheet with **Products**, **Orders** and **Settings** tabs | Jin's Google Drive |
-
-The website asks the Apps Script for the menu and sends orders to it. The script reads and writes the Google Sheet.
-
-## Setup (do this once, in order)
-
-### 1. Create the Google Sheet and backend
-
-1. Go to [sheets.new](https://sheets.new) and name the Sheet **ORIJIN Orders**.
-2. Click **Extensions → Apps Script**.
-3. Delete the sample code, paste in **all** of [`backend/Code.gs`](backend/Code.gs), and click **Save** (💾).
-4. In the function dropdown at the top, choose **`setup`** and click **Run**.
-5. Google asks for permission. Click **Review permissions**, choose your account, then **Advanced → Go to (project name) → Allow**. This warning is normal for your own scripts.
-6. Go back to the Sheet. You should now see the **Products**, **Orders** and **Settings** tabs. Reload the Sheet and an **ORIJIN** menu appears at the top.
-
-### 2. Publish the backend
-
-1. In Apps Script, click **Deploy → New deployment**.
-2. Click the ⚙️ next to "Select type" and choose **Web app**.
-3. Set **Execute as: Me** and **Who has access: Anyone**, then click **Deploy**.
-4. Copy the **Web app URL**. It ends in `/exec`.
-5. Test it: paste the URL into your browser. You should see `{"ok":true,"message":"ORIJIN API is running"}`.
-6. In this repo, open [`api.js`](api.js) and click ✏️ **Edit**. Replace `PASTE_YOUR_EXEC_URL_HERE` with your URL and keep the quotes:
-   ```js
-   const ORIJIN_API = 'https://script.google.com/macros/s/AKfy.../exec';
-   ```
-   Then click **Commit changes**.
-
-### 3. Turn on GitHub Pages
-
-1. In this repo, go to **Settings → Pages**.
-2. Under **Build and deployment**, set **Source: Deploy from a branch**, **Branch: `main`**, folder **`/ (root)`**, and click **Save**.
-3. Wait 1–2 minutes, then open https://darrie-andrei-dizon.github.io/The-Ori-jin/
-
-The menu should now show the three sample products from the Sheet.
-
-### 4. Fill in the real menu
-
-In the Sheet's **Products** tab, replace the sample prices, descriptions, ingredients and photos. In **Settings**, set `DELIVERY_FEE`, `NOTIFY_EMAIL` (Jin's email) and `PAYMENT_INSTRUCTIONS`.
-
-## Updating things later
-
-| Change | What to do |
+| | Link |
 | --- | --- |
-| Menu items, prices, photos | Edit the **Products** tab. The site updates on the next page load. |
-| Website pages (HTML, CSS, JS) | Commit to `main`. GitHub Pages republishes in about a minute. |
-| `backend/Code.gs` | Paste the new code into Apps Script, then **Deploy → Manage deployments → ✏️ → Version: New version → Deploy**. The `/exec` URL stays the same. |
+| **Your website** | https://darrie-andrei-dizon.github.io/The-Ori-jin/ |
+| **Your shop Sheet** | The Google Sheet the team shared with you. Find it in [Google Drive](https://drive.google.com) under **Shared with me**. |
 
-## Guide for Jin
+Anything you change in the Sheet shows on the website the next time a customer opens or refreshes the page. There's no save or publish button: Google Sheets saves by itself.
 
-Everything is in the **Products** tab. Hover over any column title for a hint, or use **ORIJIN → How to edit the menu**.
+The Sheet has three tabs at the bottom:
 
-- **Change a price, description or ingredients:** edit the cell.
-- **Add a product:** **ORIJIN → Add a new product**, or type a name in the next empty row. The ID fills in by itself.
-- **Add a photo:** upload it to Google Drive, then **Share → Copy link**. Paste the link in **Photo 1**, then click **ORIJIN → Make product photos viewable on the website**.
-- **Sold out:** set **Stock** to `Sold out`. The item stays visible but can't be ordered.
-- **Hide a product:** tick **Hidden**.
-- **Home page items:** tick **Featured on Home** for up to 3 products.
-- **Orders:** change the **Status** dropdown in the **Orders** tab. The time stamps fill in by themselves.
+- **Products** is your menu.
+- **Orders** is where customer orders arrive.
+- **Settings** holds your delivery fee, payment instructions and notification email.
 
-## Project files
+---
 
-```
-index.html         Home page (featured products, categories, order lookup)
-menu.html          Catalog with category filters
-product.html       Product details (product.html?id=P001)
-checkout.html      Checkout            (not yet connected to the backend)
-confirmation.html  Order confirmation  (not yet connected)
-tracking.html      Order tracking      (not yet connected)
-login.html         Login               (design only; checkout works as guest)
-api.js             Backend URL, API calls and cart
-shop.js            Builds the product cards from the Sheet
-images/            Product photos
-backend/Code.gs    Google Apps Script backend
-backend/README.md  Technical details and code snippets for the remaining pages
-```
+## Before you open the shop
 
-## Troubleshooting
+The website is showing sample content right now. Replace it first:
 
-- **The menu says "The menu is not connected yet":** `api.js` still has `PASTE_YOUR_EXEC_URL_HERE` (step 2.6).
-- **The menu says "Could not load the menu":** open the `/exec` URL in your browser. If it doesn't show `"ok":true`, redeploy with **Who has access: Anyone**.
-- **Sheet changes don't show:** reload the page. If they still don't show, use **ORIJIN → Update the website now**.
-- **A Drive photo doesn't show:** run **ORIJIN → Make product photos viewable on the website**, or set that photo to "Anyone with the link" in Drive.
-- **Backend code changes don't take effect:** deploy a **New version** (see Updating things later).
-- **The site shows a 404:** GitHub Pages isn't on yet, or it's still publishing. Wait a minute and check **Settings → Pages**.
+- [ ] Put your real **prices** in **Products**.
+- [ ] Replace "Replace with a short description." and the sample **ingredients** for each product.
+- [ ] Add **calories, protein, carbs and fat**, or leave them at 0 if you don't know them.
+- [ ] Add your own **photos** (see [Add or change a photo](#add-or-change-a-photo)).
+- [ ] Add the rest of your menu.
+- [ ] In **Settings**, put your real GCash or Maya number in `PAYMENT_INSTRUCTIONS`.
+- [ ] In **Settings**, put your email in `NOTIFY_EMAIL` so you get an email for every new order.
+- [ ] Check that `DELIVERY_FEE` (currently ₱80) is right.
+
+---
+
+## Updating your menu
+
+Everything below happens in the **Products** tab. Not sure what goes in a column? Hover your mouse over the column title and a note pops up. You can also open the **ORIJIN** menu at the top of the Sheet and choose **How to edit the menu**.
+
+### Change a price, description or ingredients
+
+1. Click the cell you want to change.
+2. Type the new text or number and press **Enter**.
+
+For prices, type the number only (for example `85`, not `₱85`).
+
+### Add a new product
+
+1. Click **ORIJIN → Add a new product**. A new row appears with an ID already filled in.
+2. Type the **Name**, then pick a **Category** and type the **Price**.
+3. Fill in the **Short Description**, **Ingredients** and **Photo 1**.
+
+You can also just type a name in the first empty row. The ID fills in by itself.
+
+### Add or change a photo
+
+1. Upload the photo to your [Google Drive](https://drive.google.com).
+2. Right-click the photo, then choose **Share → Copy link**.
+3. Paste the link into **Photo 1** for that product. **Photo 2** and **Photo 3** are optional extra photos customers can flip through.
+4. Click **ORIJIN → Make product photos viewable on the website**.
+
+Step 4 lets customers see the photo. Without it, the photo shows as blank. Square or landscape photos look best.
+
+### Mark something as sold out
+
+Set **Stock** to **Sold out**. The product stays on the menu so customers know it exists, but they can't add it to their cart. Change it back to **In stock** when it's available again. Choose **Low stock** to show a "Low stock" badge.
+
+### Take a product off the website
+
+Tick the **Hidden** box. To bring it back, untick it. Don't delete the row, because old orders still refer to it.
+
+### Choose what shows on the home page
+
+Tick **Featured on Home** for up to 3 products. They appear under "Fresh from the oven."
+
+### Add a new category
+
+Type the new category name in the **Category** column (for example `Pies`). It appears as a filter button on the menu page by itself. The four home page tiles stay as Bread, Cookies, Cakes and More.
+
+### What each column means
+
+| Column | What to put in it |
+| --- | --- |
+| **ID** | Filled in for you. Don't change it. |
+| **Name** | The product name customers see |
+| **Category** | Bread, Cookies, Cakes, More, or a new one |
+| **Price (PHP)** | Numbers only, for example `85` |
+| **Stock** | In stock, Low stock or Sold out |
+| **Short Description** | One or two sentences about the product |
+| **Ingredients** | Separated by commas: `flour, butter, eggs` |
+| **Calories, Protein, Carbs, Fat** | Per piece. Leave 0 if unknown |
+| **Photo 1, 2, 3** | Google Drive photo links |
+| **Featured on Home** | Tick to show on the home page |
+| **Hidden** | Tick to hide from the website |
+
+---
+
+## Handling orders
+
+> **Coming soon:** online checkout is still being connected. Until the team tells you it's live, customers can browse the menu but can't place orders through the website, so keep taking orders by message for now.
+
+Once it's live, this is how an order works:
+
+1. A customer places an order. It appears as a new row in the **Orders** tab, you get an email (if `NOTIFY_EMAIL` is set), and the customer gets an email with their order number, for example **OJ00001**.
+2. The customer pays using your `PAYMENT_INSTRUCTIONS`.
+3. You move the order along by changing the **Status** dropdown. The time stamps fill in by themselves, and the customer sees each step when they track their order.
+
+| Change Status to… | When |
+| --- | --- |
+| **For Payment** | Set by itself for every new order |
+| **For Baking** | After you've received their payment |
+| **For Delivery / Ready for Pickup** | When it's baked and packed |
+| **Delivered / Picked Up** | When the customer has it |
+| **Cancelled** | If the order won't go ahead |
+
+Customers track an order on the home page under **Where's my order?** with their order number and email. The **Internal Notes** column is only for you; customers never see it.
+
+---
+
+## Shop settings
+
+In the **Settings** tab, edit the **Value** column only:
+
+| Key | What it does |
+| --- | --- |
+| `SHOP_NAME` | Your shop name in customer emails |
+| `DELIVERY_FEE` | Added to delivery orders, in pesos. Pick-up orders have no fee |
+| `NOTIFY_EMAIL` | Where new-order emails go. Leave it blank to turn them off |
+| `PAYMENT_INSTRUCTIONS` | How customers should pay you, shown in their confirmation email |
+
+---
+
+## Using your phone
+
+You can update prices, stock, descriptions and order statuses from the **Google Sheets app** on your phone, and dropdowns and checkboxes work there too. The **ORIJIN** menu only shows up on a computer, so add new products and make photos viewable from a laptop.
+
+---
+
+## Do's and don'ts
+
+- **Do** use **Hidden** or **Sold out** instead of deleting products.
+- **Do** type prices as plain numbers.
+- **Don't** change the **ID** column or the column titles in the top row.
+- **Don't** rename the **Products**, **Orders** or **Settings** tabs.
+- **Don't** edit the Apps Script code (Extensions → Apps Script). Ask the team instead.
+
+---
+
+## Something not right?
+
+| Problem | Try this |
+| --- | --- |
+| My change isn't on the website | Refresh the website page. If it still doesn't show, click **ORIJIN → Update the website now** and refresh again. |
+| A photo shows blank | Click **ORIJIN → Make product photos viewable on the website**. Also check that the link in **Photo 1** is a Google Drive link. |
+| I can't see the ORIJIN menu | Refresh the Sheet and wait a few seconds. It only appears on a computer, not the phone app. |
+| Google says "This app isn't verified" | This is normal for your own shop tools. Click **Advanced → Go to… (unsafe) → Allow**. It only asks once. |
+| A product disappeared | Check that **Hidden** isn't ticked and that the row has both an **ID** and a **Name**. |
+| A customer can't order an item | Check that **Stock** isn't **Sold out** and that it has a **Price**. |
+| The website won't load at all | Contact the team. |
+
+---
+
+**Need help?** Contact the ORIJIN dev team. Technical notes for the team are in the [developer guide](backend/README.md).
